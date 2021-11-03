@@ -21,24 +21,24 @@ namespace Construction.Controllers
             _ProjectRepository = project;
         }
         [HttpGet]
-        public async Task<IEnumerable<Project>> GetProjects()
+        public async Task<IEnumerable<PoneNumber>> GetProjects()
         {
             return await _ProjectRepository.Get();
         }
         [HttpGet("{id}")]
-       public async  Task<ActionResult<Project>> GetProjects(int id)
+       public async  Task<ActionResult<PoneNumber>> GetProjects(int id)
         {
             return await _ProjectRepository.Get(id);
         }
         [HttpPost]
-        public async Task<ActionResult<Project>> CreateProject([FromBody] Project project)
+        public async Task<ActionResult<PoneNumber>> CreateProject([FromBody] PoneNumber project)
         {
             var newProject = await _ProjectRepository.Create(project);
             return CreatedAtAction((nameof(GetProjects)), new { id = newProject.Id }, newProject);
         }
         [HttpPut]
 
-        public async Task<ActionResult> PutProject(int id,[FromBody] Project project)
+        public async Task<ActionResult> PutProject(int id,[FromBody] PoneNumber project)
         {
             if(id!=project.Id)
             {

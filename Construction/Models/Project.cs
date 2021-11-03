@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Construction.Models
 {
-    public class Project
+    public class PoneNumber
     {
         public int Id { get; set; }
         public string projectName { get; set; }

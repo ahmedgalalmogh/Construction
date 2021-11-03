@@ -13,7 +13,7 @@ namespace Construction.Models
         public int numberOfFloors { get; set; }
         
         public int projectId { get; set; }
-        public Project project { get; set; }
+        public PoneNumber project { get; set; }
 
         public ICollection<Unit> units { get; set; }
 
