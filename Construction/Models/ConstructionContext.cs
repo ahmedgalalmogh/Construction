@@ -23,7 +23,7 @@ namespace Construction.Models
              .HasForeignKey(p => p.BuildingId);
 
         }
-    public DbSet<PoneNumber> projects { get; set; }
+    public DbSet<Project> projects { get; set; }
         public DbSet<Building> buildings { get; set; }
         public DbSet<Unit> units { get; set; }
         public DbSet<PhoneNumber> phoneNumbers { get; set; }

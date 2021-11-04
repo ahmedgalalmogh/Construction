@@ -9,10 +9,10 @@ namespace Construction.Repositories
     public  interface IProject
     {
 
-        Task<IEnumerable<PoneNumber>> Get();
-        Task<PoneNumber> Get(int id);
-        Task<PoneNumber> Create(PoneNumber project);
-        Task Update(PoneNumber project);
+        Task<IEnumerable<Project>> Get();
+        Task<Project> Get(int id);
+        Task<Project> Create(Project project);
+        Task Update(Project project);
         Task Delete(int id);
     }
 }

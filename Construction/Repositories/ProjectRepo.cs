@@ -14,7 +14,7 @@ namespace Construction.Repositories
         {
             _context = context;
         }
-        public async Task<PoneNumber> Create(PoneNumber project)
+        public async Task<Project> Create(Project project)
         {
             _context.Add(project);
             await _context.SaveChangesAsync();
@@ -23,22 +23,22 @@ namespace Construction.Repositories
 
         public async Task Delete(int id)
         {
-            PoneNumber projectToDelete =(PoneNumber) await _context.projects.FindAsync(id);
+            Project projectToDelete =(Project) await _context.projects.FindAsync(id);
              _context.Remove(projectToDelete);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<PoneNumber>> Get()
+        public async Task<IEnumerable<Project>> Get()
         {
             return await _context.projects.Include(b => b.Buildings).AsNoTracking().ToListAsync();
         }
 
-        public async Task<PoneNumber> Get(int id)
+        public async Task<Project> Get(int id)
         {
             return await _context.projects.Include(b => b.Buildings).AsNoTracking().FirstOrDefaultAsync(b=>b.Id==id);
         }
 
-        public async Task Update(PoneNumber project)
+        public async Task Update(Project project)
         {
             _context.Entry(project).State = EntityState.Modified;
             await _context.SaveChangesAsync();
