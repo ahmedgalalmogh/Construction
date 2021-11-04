@@ -13,6 +13,7 @@ namespace Construction.Models
         public string location { get; set; }
         public int numberOfBuildings { get; set; }
         public int numberOfUnits { get; set; }
+        public bool closed { get; set; }
 
         public ICollection<Building> Buildings { get; set; }
 
