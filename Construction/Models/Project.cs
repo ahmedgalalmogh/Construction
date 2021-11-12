@@ -15,6 +15,8 @@ namespace Construction.Models
         public int numberOfUnits { get; set; }
         public bool closed { get; set; }
         public string headerImage { get; set; }
+        public string ProsureImage { get; set; }
+
         public ICollection<Building> Buildings { get; set; }
 
 

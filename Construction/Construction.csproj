@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Folder Include="Resources\Images\" />
+    <Folder Include="wwwroot\Resources\" />
   </ItemGroup>
 
 </Project>

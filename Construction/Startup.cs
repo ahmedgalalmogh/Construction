@@ -37,7 +37,7 @@ namespace Construction
             services.AddScoped<IProject, ProjectRepo>();
             services.AddScoped<IUnit, UnitRepo>();
             services.AddScoped<IPhoneNumber, PhoneNumberRepo>();
-            services.AddDbContext<ConstructionContext>((o) => o.UseSqlite("Data source=AlMounirDataBase.db"));
+            services.AddDbContext<ConstructionContext>((o) => o.UseSqlite("Data source=AlMounirDataBasetest2.db"));
             services.AddControllers();
             services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
