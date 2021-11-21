@@ -37,6 +37,15 @@ namespace Construction.Controllers
        public async  Task<ActionResult<Project>> GetProjects(int id)
         {
             return await _ProjectRepository.Get(id);
+            //var header = project.headerImage;
+            //var pathing = Directory.GetCurrentDirectory();
+            //var image = System.IO.File.OpenRead(header);
+            //project.headerImage = Path.Combine(
+            //   Directory.GetCurrentDirectory(), "wwwroot",
+            //   project.headerImage.Split("\\")[project.headerImage.Split("\\").Length-1]);
+            //project.ProsureImage = _hostingEnv.WebRootPath +  project.ProsureImage.Split("\\")[project.ProsureImage.Split("\\").Length - 1];
+            //return project;
+
         }
         [HttpPost]
         public async Task<ActionResult<Project>> CreateProject([FromForm] ProjectViewModel projectVM)
@@ -49,6 +58,7 @@ namespace Construction.Controllers
                 project.headerImage =    UploadedFile(projectVM.headerImage);  //save the filePath to database ImagePath field.
                 project.ProsureImage = UploadedFile(projectVM.ProSureImage);  //save the filePath to database ImagePath field.
                 project.location = projectVM.location;
+                project.description = projectVM.description;
                 project.numberOfBuildings = projectVM.numberOfBuildings;
                 project.numberOfUnits = projectVM.numberOfUnits;
                 project.projectName = projectVM.projectName;
@@ -72,54 +82,43 @@ namespace Construction.Controllers
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    formFile.CopyTo(fileStream);
+                    formFile.CopyToAsync(fileStream);
                 }
-           
             return filePath;
             }
             return null ;
         }
     
-    [HttpPut("{id}")]
-        public async Task<ActionResult> PutProject(int id,[FromBody] ProjectViewModel projectVM)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> PutProject(int id,[FromForm] ProjectViewModel projectVM)
         {
-            if(id!=projectVM.Id)
+            var projectToCheck = await _ProjectRepository.Get(id);
+            Project project = new Project();
+            if(projectToCheck==null)
             {
                 return BadRequest("Id doesn't match");
             }
             if (projectVM.headerImage != null)
             {
-                var a = _hostingEnv.WebRootPath;
-                var fileName = Path.GetFileName(projectVM.headerImage.FileName);
-                var filePath = Path.Combine("Resources\\Images", fileName);
-
-                using (var fileSteam = new FileStream(filePath, FileMode.Create))
-                {
-                    await projectVM.headerImage.CopyToAsync(fileSteam);
-                }
-                var fileName2 = Path.GetFileName(projectVM.ProSureImage.FileName);
-                var filePath2 = Path.Combine("Resources\\Images", fileName);
-                using (var fileSteam = new FileStream(filePath2, FileMode.Create))
-                {
-                    await projectVM.ProSureImage.CopyToAsync(fileSteam);
-                }
-
-                Project project = new Project();
-                project.closed = projectVM.closed;
-                project.headerImage = filePath;  //save the filePath to database ImagePath field.
-                project.ProsureImage = filePath2;  //save the filePath to database ImagePath field.
-                project.location = projectVM.location;
-                project.numberOfBuildings = projectVM.numberOfBuildings;
-                project.numberOfUnits = projectVM.numberOfUnits;
-                project.projectName = projectVM.projectName;
-                var newProject = await _ProjectRepository.Create(project);
-                await _ProjectRepository.Update(project);
-                return NoContent();
+                projectToCheck.headerImage = UploadedFile(projectVM.headerImage);
             }
-            else
+            if (projectVM.ProSureImage != null)
             {
-                return BadRequest();
+                projectToCheck.ProsureImage = UploadedFile(projectVM.ProSureImage);
             }
+            projectToCheck.closed = projectVM.closed;
+           projectToCheck.description = projectVM.description;
+            projectToCheck.location = projectVM.location;
+            projectToCheck.numberOfBuildings = projectVM.numberOfBuildings;
+            projectToCheck.numberOfUnits = projectVM.numberOfUnits;
+            projectToCheck.projectName = projectVM.projectName;
+                //var newProject = await _ProjectRepository.Create(project);
+             await _ProjectRepository.Update(projectToCheck);
+                return NoContent();
+            //else
+            //{
+            //    return BadRequest();
+            //}
         }
         [HttpDelete("{id}")]
 

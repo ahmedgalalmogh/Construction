@@ -10,6 +10,8 @@ namespace Construction.Models
     {
         public int Id { get; set; }
         public string projectName { get; set; }
+        public string description { get; set; }
+
         public string location { get; set; }
         public int numberOfBuildings { get; set; }
         public int numberOfUnits { get; set; }

@@ -36,8 +36,10 @@ namespace Construction
             services.AddScoped<IBuilding, BuildingRepo>();
             services.AddScoped<IProject, ProjectRepo>();
             services.AddScoped<IUnit, UnitRepo>();
+            services.AddScoped<IUser, UserRepo>();
+
             services.AddScoped<IPhoneNumber, PhoneNumberRepo>();
-            services.AddDbContext<ConstructionContext>((o) => o.UseSqlite("Data source=AlMounirDataBasetest2.db"));
+            services.AddDbContext<ConstructionContext>((o) => o.UseSqlite("Data source=AlMounirDataBasetest5.db"));
             services.AddControllers();
             services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
@@ -58,15 +60,15 @@ namespace Construction
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseCors(x => x
-            .AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader());
-
                 app.UseSwagger();
 
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Construction v1"));
             }
+
+             app.UseCors(x => x
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
 
             app.UseHttpsRedirection();
 

@@ -27,6 +27,7 @@ namespace Construction.Models
         public DbSet<Building> buildings { get; set; }
         public DbSet<Unit> units { get; set; }
         public DbSet<PhoneNumber> phoneNumbers { get; set; }
+        public DbSet<User> users { get; set; }
 
     }
 }
